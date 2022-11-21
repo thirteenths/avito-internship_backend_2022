@@ -55,6 +55,7 @@ func getAllPayrolles(w http.ResponseWriter, r *http.Request) {
 }
 
 func createPayroll(w http.ResponseWriter, r *http.Request) {
+	
 	payroll := &models.Payroll{}
 	//log.Printf("kek")
 	/*if err := render.Bind(r, balance); err != nil {

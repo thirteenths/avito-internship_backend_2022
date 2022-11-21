@@ -1,17 +1,17 @@
-FROM golang:1.14.6-alpine3.12 as builder
+# syntax=docker/dockerfile:1
 
-COPY go.mod go.sum /go/src//
-WORKDIR /go/src/github.com/thirteenths/final
+FROM golang:1.16-alpine 
+
+WORKDIR /go/src/github.com/thirteenths/final/
+
+COPY go.mod /go/src/github.com/thirteenths/final/
+COPY go.sum /go/src/github.com/thirteenths/final/
 RUN go mod download
-COPY . /go/src/github.com/thirteenths/final
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o build/final github.com/thirteenths/final
 
+COPY . /go/src/github.com/thirteenths/final/
 
-FROM alpine
-
-RUN apk add --no-cache ca-certificates && update-ca-certificates
-COPY --from=builder /go/src/github.com/thirteenths/final/build/final /usr/bin/final
+RUN go build -o /go/src/github.com/thirteenths/final/docker-gs-ping
 
 EXPOSE 8080 8080
 
-ENTRYPOINT ["/usr/bin/final"]
+CMD [ "/go/src/github.com/thirteenths/final/docker-gs-ping" ]

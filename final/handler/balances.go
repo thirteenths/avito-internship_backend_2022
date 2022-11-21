@@ -62,7 +62,13 @@ func createBalance(w http.ResponseWriter, r *http.Request) {
 		render.Render(w, r, ErrBadRequest)
 		return
 	}*/
+
+	//log.Printf("%d", &balance.)
+
 	if err := dbInstance.AddBalance(balance); err != nil {
+
+
+
 		render.Render(w, r, ErrorRenderer(err))
 		return
 	}
